@@ -11,10 +11,18 @@ def hello_world(request):
     return Response(message)
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT"))
+    port = int(os.environ.get("PORT", 8000))  # Default to port 8000 if not set
     with Configurator() as config:
         config.add_route('hello', '/')
         config.add_view(hello_world, route_name='hello')
+
+        config.add_route('get_patients', '/patients')
+        config.add_view(get_patients, route_name='get_patients', renderer='json')
+
+        config.add_route('get_patient_by_id', '/patients/{id}')
+        config.add_view(get_patient_by_id, route_name='get_patient_by_id', renderer='json')
+
         app = config.make_wsgi_app()
     server = make_server('0.0.0.0', port, app)
+    print(f"Starting server on port {port}...")
     server.serve_forever()
