@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 
 def hello_world(request):
     name = request.params.get('name', 'world')
-    message = f"Welcome, {name}!\n"
+    message = f"Welcome to aws , {name}!\n"
     logger.info(f"hello_world endpoint called with name: {name}")
     return Response(message)
 
